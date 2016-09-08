@@ -7,15 +7,15 @@ import (
 
 type User struct {
 	Id    int		`form:"-"`
-	Name  string		`form:"-"`
-	Username string		`form:"username"`
-	Password string		`form:"password"`
-	Email string		`form:"-"`
+	Name  string		`orm:"size(64)";form:"-"`
+	Username string		`orm:"size(64)";form:"username"`
+	Password string		`orm:"size(64)";form:"password"`
 }
 
-//func init() {
-//	// 需要在init中注册定义的model
-//}
+func init() {
+	// 需要在init中注册定义的model
+	orm.RegisterModel(new(User))
+}
 
 func (c *User) Login() int {
 	o := orm.NewOrm()

@@ -15,10 +15,15 @@ func (c *AuthController) Get() {
 }
 
 func (c *AuthController) Post() {
-	u := models.User{}
-	if err := c.ParseForm(&u); err != nil {
+	username := c.GetString("username")
+	password := c.GetString("password")
+	userType,err := c.GetInt("type")
+
+
+	if err != nil {
 		c.Out("解析错误")
 	} else {
+		u := models.User{Username:username,Password:password,Type:userType}
 		status := u.Login()
 		fmt.Println(status)
 		if status > 0 {
@@ -31,6 +36,9 @@ func (c *AuthController) Post() {
 				break
 			case -2:
 				c.Out("密码错误")
+				break
+			case -3:
+				c.Out("用户类型不正确")
 				break
 			default:
 				c.Out("未知错误")

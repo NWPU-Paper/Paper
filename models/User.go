@@ -2,14 +2,14 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
-	"fmt"
 )
 
 type User struct {
-	Id    int		`form:"-"`
-	Name  string		`orm:"size(64)";form:"-"`
-	Username string		`orm:"size(64)";form:"username"`
-	Password string		`orm:"size(64)";form:"password"`
+	Id    int
+	Name  string		`orm:"size(64)"`
+	Username string		`orm:"size(64)"`
+	Password string		`orm:"size(64)"`
+	Type int
 }
 
 func init() {
@@ -25,10 +25,11 @@ func (c *User) Login() int {
 		//用户名不存在
 		return -1
 	} else if c.Password != data.Password {
-		fmt.Println(c.Password)
-		fmt.Println(data.Password)
 		//密码不正确
 		return -2
+	} else if c.Type != data.Type {
+		//用户类型不正确
+		return -3
 	} else {
 		return data.Id
 	}

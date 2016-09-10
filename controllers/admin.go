@@ -1,32 +1,24 @@
 package controllers
 
-import (
-	"github.com/banixc/paper/models"
+type LoginPreparer interface{
+	LoginPrepare()
+}
 
-)
 
+//所有需要登陆的都继承这个 未登陆则自动返回
 type AdminController struct {
 	BaseController
-	CurrentUser models.User
 }
 
-func (c *AdminController) Prepare()  {
-	c.GetCurrentUser()
-	if c.CurrentUser.Id == -1 {
-		//未登录则返回403
-		c.Abort("403")
+func (c *AdminController) NestPrepare() {
+	if !c.isLogin {
+		//未登录则返回401
+		c.Abort("401")
 	}
-}
 
-func (c *AdminController) GetCurrentUser() {
-	id := c.GetSession("user_id")
-	if id != nil {
-		c.CurrentUser = models.User{Id:id.(int)}
-		c.CurrentUser.GetUser()
-	} else {
-		c.CurrentUser = models.User{Id:-1}
+	if app, ok := c.AppController.(LoginPreparer); ok {
+		app.LoginPrepare()
 	}
+
 }
-
-
 

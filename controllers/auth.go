@@ -1,57 +1,49 @@
 package controllers
 
 import (
-	"github.com/banixc/paper/models"
-	"fmt"
+	"github.com/NWPU-Paper/Paper/models"
 )
 
-type AuthController struct {
+type LoginController struct {
 	BaseController
 }
 
-func (c *AuthController) Get() {
+func (c *LoginController) Get() {
+	c.LoginRedirect()
+
 	c.Data["Title"] = "登陆"
-	c.TplName = "login.html"
+	c.TplName = "login.tpl"
 }
 
-func (c *AuthController) Post() {
-	username := c.GetString("username")
+func (c *LoginController) Post() {
+	c.LoginRedirect()
+
+	user_id := c.GetString("user_id")
 	password := c.GetString("password")
-	userType,err := c.GetInt("type")
 
+	u := models.User{UserId: user_id, Password: password}
 
-	if err != nil {
-		c.Out("解析错误")
-	} else {
-		u := models.User{Username:username,Password:password,Type:userType}
-		status := u.Login()
-		fmt.Println(status)
-		if status > 0 {
-			c.SetSession("user_id", status)
-			c.Redirect(c.URLFor("ListController.Get"),301)
-		} else {
-			switch status {
-			case -1:
-				c.Out("用户名不存在")
-				break
-			case -2:
-				c.Out("密码错误")
-				break
-			case -3:
-				c.Out("用户类型不正确")
-				break
-			default:
-				c.Out("未知错误")
-				break
-			}
-		}
+	switch u.Login() {
+	case models.ERROR_USER_NOT_EXIST:
+		c.Ctx.WriteString("用户名不存在")
+	case models.ERROR_PASSWORD_ERROR:
+		c.Ctx.WriteString("密码错误")
+	case models.SUCCESS:
+		c.SetSession("user_id", u.UserId)
+		c.ToIndex()
+	}
+
+}
+
+func (c *LoginController) Logout() {
+	c.DelSession("user_id")
+	c.ToIndex()
+
+}
+
+// 如果登陆则重定向到主页
+func (c *LoginController) LoginRedirect() {
+	if c.isLogin {
+		c.ToIndex()
 	}
 }
-
-func (c *AuthController) Logout() {
-	c.SetSession("user_id", nil)
-	c.Out("登出成功")
-}
-
-
-

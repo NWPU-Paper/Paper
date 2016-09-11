@@ -2,7 +2,7 @@
 <head lang="zh-CN">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
-    <title>论文管理系统::{{.Title}}</title>
+    <title>论文管理系统::{{.Module}}::{{.Title}}</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
      {{.HtmlHead}}

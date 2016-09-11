@@ -1,90 +1,93 @@
-<!DOCTYPE html>
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    高校论文管理平台
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- /.row -->
+        <div class="row">
+            <!-- blue-->
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="middle">今日日期</div>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"> 456</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- green-->
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="middle">结束时间</div>
+                                <!-- <i class="fa fa-tasks fa-5x"></i>  -->
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"> 123</div>
 
-<html>
-<head>
-  <title>Beego</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <style type="text/css">
-    *,body {
-      margin: 0px;
-      padding: 0px;
-    }
+                            </div>
+                        </div>
+                    </div>
 
-    body {
-      margin: 0px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      line-height: 20px;
-      background-color: #fff;
-    }
+                </div>
+            </div>
 
-    header,
-    footer {
-      width: 960px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+            {{if eq .CurrentUser.Type 2}}
 
-    .logo {
-      background-repeat: no-repeat;
-      -webkit-background-size: 100px 100px;
-      background-size: 100px 100px;
-      background-position: center center;
-      text-align: center;
-      font-size: 42px;
-      padding: 250px 0 70px;
-      font-weight: normal;
-      text-shadow: 0px 1px 2px #ddd;
-    }
+            <!-- yellow-->
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="middle">指导人数</div>
+                                <!-- <i class="fa fa-shopping-cart fa-5x"></i> -->
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">4人</div>
 
-    header {
-      padding: 100px 0;
-    }
+                            </div>
+                        </div>
+                    </div>
 
-    footer {
-      line-height: 1.8;
-      text-align: center;
-      padding: 50px 0;
-      color: #999;
-    }
+                </div>
+            </div>
 
-    .description {
-      text-align: center;
-      font-size: 16px;
-    }
 
-    a {
-      color: #444;
-      text-decoration: none;
-    }
+            <!-- red-->
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="middle">已选人数</div>
+                                <!--<i class="fa fa-support fa-5x"></i> -->
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">4人</div>
 
-    .backdrop {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      box-shadow: inset 0px 0px 100px #ddd;
-      z-index: -1;
-      top: 0px;
-      left: 0px;
-    }
-  </style>
-</head>
+                            </div>
+                        </div>
+                    </div>
 
-<body>
-  <header>
-    <h1 class="logo">Welcome to Beego</h1>
-    <div class="description">
-      Beego is a simple & powerful Go web framework which is inspired by tornado and sinatra.
+                </div>
+            </div>
+
+            {{end}}
+
+        </div>
     </div>
-  </header>
-  <footer>
-    <div class="author">
-      Official website:
-      <a href="http://{{.Website}}">{{.Website}}</a> /
-      Contact me:
-      <a class="email" href="mailto:{{.Email}}">{{.Email}}</a>
-    </div>
-  </footer>
-  <div class="backdrop"></div>
-</body>
-</html>
+</div>

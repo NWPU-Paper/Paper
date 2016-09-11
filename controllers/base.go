@@ -43,3 +43,7 @@ func (c *BaseController) RedirectTo(endpoint string) {
 func (c *BaseController) Out(message string) {
 	c.Ctx.WriteString(message)
 }
+
+func (c *BaseController) NotFound() {
+	c.Ctx.WriteString("NotFound")
+}

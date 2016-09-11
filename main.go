@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "github.com/banixc/paper/routers"
+	_ "github.com/NWPU-Paper/Paper/routers"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
@@ -18,4 +18,3 @@ func init() {
 func main() {
 	beego.Run()
 }
-

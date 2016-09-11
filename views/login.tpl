@@ -116,7 +116,7 @@
         </div>
         <div class="login-content ">
             <div class="form">
-                <form action='{{urlfor "AuthController.Post"}}' method="post">
+                <form action='{{urlfor "LoginController.Post"}}' method="post">
                     <div class="form-group">
                         <div class="col-xs-12  ">
                             <div class="input-group">

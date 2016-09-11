@@ -20,5 +20,7 @@ func (c *AdminController) NestPrepare() {
 		app.LoginPrepare()
 	}
 
+	c.Data["CurrentUser"] = c.user
+
 }
 

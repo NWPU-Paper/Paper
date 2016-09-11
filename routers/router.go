@@ -7,7 +7,6 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.IndexController{})
-
 	beego.Router("/login", &controllers.LoginController{})
 	beego.Router("/logout", &controllers.LoginController{}, "*:Logout")
 
@@ -24,5 +23,7 @@ func init() {
 	studentController:=new(controllers.StudentController)
 	beego.Router("/student",studentController)
 	beego.Router("/student/profile",studentController,"get:Profile")
+
+	beego.Router("/subject/:id([0-9]+)", &controllers.SubjectController{}, "Get:Detail")
 
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"time"
 )
 
 func init() {
@@ -16,5 +17,7 @@ func init() {
 }
 
 func main() {
+	beego.AddFuncMap("Now",time.Now)
+
 	beego.Run()
 }

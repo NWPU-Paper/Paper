@@ -37,5 +37,8 @@ func (s *Subject) Get() {
 	o.QueryTable("subject").Filter("Id",s.Id).RelatedSel().One(s)
 }
 
-
-
+func (c *Subject) SetStatus(status int) {
+	o := orm.NewOrm();
+	c.Status.Id = status
+	o.Update(c,"Status")
+}

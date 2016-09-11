@@ -12,11 +12,11 @@ func init() {
 	orm.RegisterModel(new(Document))
 }
 
-func (d *Document) Add() bool{
+func (d *Document) Add() error{
 	o := orm.NewOrm()
 
-	_, err := o.Insert(&d)
-	return err == nil
+	_, err := o.Insert(d)
+	return err
 
 }
 

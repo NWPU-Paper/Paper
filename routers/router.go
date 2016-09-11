@@ -26,4 +26,8 @@ func init() {
 
 	beego.Router("/subject/:id([0-9]+)", &controllers.SubjectController{}, "Get:Detail")
 
+
+	//Upload
+	beego.Router("/upload",&controllers.FileController{})
+
 }

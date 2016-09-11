@@ -11,3 +11,18 @@ type Document struct {
 func init() {
 	orm.RegisterModel(new(Document))
 }
+
+func (d *Document) Add() bool{
+	o := orm.NewOrm()
+
+	_, err := o.Insert(&d)
+	return err == nil
+
+}
+
+func (d *Document) Get() bool{
+	o := orm.NewOrm()
+
+	err := o.Read(d)
+	return err == nil
+}

@@ -25,6 +25,8 @@ type User struct {
 	Phone    int
 	Major    *Major 	`orm:"rel(fk)"`
 	Type     int
+	MaxStudent int
+	NowStudent int
 }
 
 func init() {

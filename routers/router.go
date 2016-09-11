@@ -7,10 +7,22 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.IndexController{})
+
 	beego.Router("/login", &controllers.LoginController{})
 	beego.Router("/logout", &controllers.LoginController{}, "*:Logout")
-	beego.Router("/teacher",&controllers.TeacherController{})
-	beego.Router("/student",&controllers.StudentController{})
-	beego.Router("/test",&controllers.TestController{})
+
+	teacherController:=new(controllers.TeacherController)
+	beego.Router("/teacher/index",teacherController)
+	beego.Router("/teacher/profile",teacherController,"get:Profile")
+	beego.Router("/teacher/subjects",teacherController,"get:Subject")
+	beego.Router("/teacher/paper",teacherController,"get:Paper")
+	beego.Router("/teacher/score",teacherController,"get:Score")
+	beego.Router("/teacher/assignments",teacherController,"get:Assignment")
+	beego.Router("/teacher/students",teacherController,"get:Student")
+	beego.Router("/teacher/message",teacherController,"get:Message")
+
+	studentController:=new(controllers.StudentController)
+	beego.Router("/student",studentController)
+	beego.Router("/student/profile",studentController,"get:Profile")
 
 }

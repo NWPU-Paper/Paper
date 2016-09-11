@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	orm.RegisterDataBase("default", "mysql", "paper:paper@/paper?charset=utf8mb4,utf8")
+	orm.RegisterDataBase("default", "mysql", "paper:paper@tcp(mysql.banixc.com:3306)/paper?charset=utf8mb4,utf8")
 	orm.RunSyncdb("default", false, true)
 
 	//开启Debug

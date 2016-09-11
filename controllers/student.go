@@ -15,4 +15,8 @@ func (c *StudentController) LoginPrepare() {
 
 func (c *StudentController) Get() {
 	c.Ctx.WriteString("这是学生界面")
+
+}
+func (c *StudentController) Profile(){
+	c.Ctx.WriteString("这是学生资料")
 }

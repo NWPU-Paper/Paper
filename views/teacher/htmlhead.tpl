@@ -1,5 +1,5 @@
 <!-- Custom CSS -->
-<link href="/static/css/teacher/sb-admin.css" rel="stylesheet">
+<link href="/static/css/sb-admin.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
 <link href="/static/css/plugins/morris.css" rel="stylesheet">
 <!-- Custom Fonts -->

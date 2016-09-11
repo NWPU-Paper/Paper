@@ -116,9 +116,5 @@ func (c *TeacherController) SubjectList()  {
 
 }
 
-// 显示题目详细
 
-func (c *TeacherController) Subject()  {
-
-}
 

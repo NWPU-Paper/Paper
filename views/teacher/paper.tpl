@@ -214,6 +214,7 @@
                             </table>
                         </div>
                     </div>
+                    </div>
                     <div class="col-lg-12">
                         <h3>论文及英文翻译：</h3>
                         <div class="table-responsive">

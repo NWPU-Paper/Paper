@@ -14,6 +14,7 @@ func init() {
 	beego.Router("/teacher/index",teacherController)
 	beego.Router("/teacher/profile",teacherController,"get:Profile")
 	beego.Router("/teacher/subjects",teacherController,"get:Subject")
+	beego.Router("/teacher/subjects/addsubject",teacherController,"get:AddSubject")
 	beego.Router("/teacher/paper",teacherController,"get:Paper")
 	beego.Router("/teacher/score",teacherController,"get:Score")
 	beego.Router("/teacher/assignments",teacherController,"get:Assignment")

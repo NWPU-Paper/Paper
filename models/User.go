@@ -22,7 +22,7 @@ type User struct {
 	Password string
 	Email    string
 	Gender   int
-	Phone    int
+	Phone    string
 	Major    *Major 	`orm:"rel(fk)"`
 	Type     int
 }
@@ -54,5 +54,4 @@ func (c *User) GetUser() bool{
 		return false
 	}
 	return true
-
 }

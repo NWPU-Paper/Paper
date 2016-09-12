@@ -1,11 +1,15 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"github.com/astaxie/beego/orm"
+	"time"
+)
 
 type Document struct {
 	Id 	int
 	Name	string
 	Path 	string
+	Time 	time.Time
 }
 
 func init() {

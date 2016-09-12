@@ -33,7 +33,8 @@ func (c *FileController) Post() {
 
 	c.ErrorJson(c.SaveToFile("file",path))
 
-	c.document.Path = c.document.Path[1:len(c.document.Path)]
+	c.document.Path = c.document.Path[1:len(c.document.Path)] + "/"
+
 	c.ErrorJson(c.document.Add())
 
 	c.Data["json"] = map[string]interface{}{"success": STATUS_FILE_UPLOAD_SUCCESS, "message": c.document}

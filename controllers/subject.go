@@ -11,7 +11,7 @@ type SubjectController struct {
 
 func (c *SubjectController) LoginPrepare() {
 	c.Data["Title"] = "课题"
-
+	c.Layout = "base/base2.tpl"
 }
 
 func (c *SubjectController) Get() {
@@ -20,10 +20,10 @@ func (c *SubjectController) Get() {
 
 func (c *SubjectController) Detail(){
 	id ,_ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-	s := models.GetSubject(id)
-	if s!= nil {
-		c.Data["json"] = s
-		c.ServeJSON()
+	s,err:= models.GetSubject(id)
+	if err== nil {
+		c.TplName="subject/body.tpl"
+		c.Data["Subject"] = s;
 	} else {
 		c.NotFound()
 	}

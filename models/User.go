@@ -22,7 +22,7 @@ type User struct {
 	Password string
 	Email    string
 	Gender   int
-	Phone    int
+	Phone    string
 	Major    *Major 	`orm:"rel(fk)"`
 	Type     int
 	MaxStudent int

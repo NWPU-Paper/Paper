@@ -1,12 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">
-            高校论文管理平台 <small>教师端</small>
-        </h1>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
         <div class="form-group">
             <ul id="myTab" class="nav nav-tabs" style="padding: 10px;">
                 <li class="active">
@@ -258,13 +251,3 @@
             </div>
         </div>
     </div>
-    <!-- /.row -->
-
-    <!-- Flot Charts -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h2 class="page-header"></h2>
-
-        </div>
-    </div>
-</div>

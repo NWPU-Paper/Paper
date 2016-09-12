@@ -24,6 +24,8 @@ func (c *SubjectController) Detail(){
 	if err== nil {
 		c.TplName="subject/body.tpl"
 		c.Data["Subject"] = s;
+		c.Data["json"] = s;
+		c.ServeJSON();
 	} else {
 		c.NotFound()
 	}

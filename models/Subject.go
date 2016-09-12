@@ -85,3 +85,25 @@ func (c *Subject) SetStatus(status int) {
 	c.Status.Id = status
 	o.Update(c,"Status")
 }
+
+func (c *Subject) SetGrade(t int,grade float32){
+	switch t {
+	case 0:
+		//Paper Grade
+		c.PaperGrade = grade
+		break
+	case 1:
+		//Defence Grade
+		c.DefenceGrade = grade
+		break
+	}
+}
+
+func (c *Subject) AddFile(t int ,d Document)  {
+	o := orm.NewOrm()
+	switch t {
+	case TYPE_FILE_TASK:
+		c.Task.Id = d.Id
+		o.Update(c);
+	}
+}

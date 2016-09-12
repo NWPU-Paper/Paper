@@ -70,8 +70,14 @@ func (c *TeacherController) Message() {
 }
 
 // 发布新题目
-func (c *TeacherController) Post() {
+func (c *TeacherController) AddSubject() {
+	c.TplName = "teacher/addNewSubject.tpl"
 
+	c.LayoutSections = make(map[string]string)
+	c.Data["pageKey"] = "subject";
+	c.LayoutSections["HtmlHead"] = "teacher/htmlhead.tpl"
+	c.LayoutSections["Nav"] = "teacher/nav.tpl"
+	c.LayoutSections["Script"] = "teacher/script.tpl"
 }
 
 // 显示题目列表

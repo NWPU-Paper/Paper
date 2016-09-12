@@ -6,18 +6,7 @@
 
 {{if eq .Subject.Status.Id 11 15 16}}
 <h4>当前已选择学生</h4>
-{{range .Subject.Users}}
-<div class="row">
-    <div class="checkbox col-md-2">
-        <label><input type="checkbox" value="{{.UserId}}">{{.Name}}</label>
-    </div>
-    <div class="checkbox col-md-2">
-        {{.UserId}}
-    </div>
-</div>
-{{else}}
-<p>当前没有学生选择</p>
-{{end}}
+
 
 {{end}}
 

@@ -32,7 +32,7 @@ func (c *TeacherController) Profile() {
 }
 
 func (c *TeacherController) Subject() {
-	c.TplName = "teacher/body.tpl"
+	c.TplName = "teacher/subject.tpl"
 
 	c.Data["pageKey"] = "subject";
 

@@ -225,7 +225,7 @@
 </div>
 <!-- 上传任务书 -->
 <div class="modal fade" id="task_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form role="form" action="#" method="post">
+    <form role="form" action="" method="post">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -235,7 +235,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="file" name="task_upload_doc">
+                        <input type="file" name="file">
+                        <input style="display:none" name="operate" value="4">
                     </div>
                 </div>
                 <div class="modal-footer">

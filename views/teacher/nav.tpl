@@ -1,7 +1,6 @@
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="container">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -15,18 +14,19 @@
 
     </div>
     <!-- Top Menu Items -->
-    <ul class="nav navbar-nav navbar-right">
-        <li>            <a class="navbar-brand" href="{{urlfor "IndexController.Get"}}"> {{.CurrentUser.Name}}</a>
+    <ul class="nav navbar-right top-nav">
+        <li class="dropdown">
+            <a class="navbar-brand" href="{{urlfor "TeacherController.Profile"}}">{{.CurrentUser.Name}}</a>
         </li>
-        <li>
-            <a href="{{urlfor "LoginController.Logout"}}"><i class="fa fa-fw fa-power-off"></i> 登出  </a>
+        <li class="dropdown">
+            <a href="{{urlfor "LoginController.Logout"}}"><i class="fa fa-fw fa-power-off"></i> 登出</a>
         </li>
     </ul>
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav side-nav">
             <li {{if eq .pageKey "index"}}  class="active" {{end}}  >
-                <a href="{{urlfor "TeacherController.Get"}}"><i class="fa fa-fw fa-dashboard"></i> 主页</a>
+                <a href="{{urlfor "TeacherController.Index"}}"><i class="fa fa-fw fa-dashboard"></i> 主页</a>
             </li>
             <li {{if eq .pageKey "profile"}}  class="active" {{end}} >
                 <a href="{{urlfor "TeacherController.Profile"}}"><i class="fa fa-fw fa-bar-chart-o"></i> 用户资料</a>
@@ -51,5 +51,5 @@
             </li>
         </ul>
     </div>
-    </div>
+    <!-- /.navbar-collapse -->
 </nav>

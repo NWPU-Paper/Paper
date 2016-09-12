@@ -9,12 +9,14 @@
 </head>
 
 <body>
+<div id="wrapper">
 {{.Nav}}
-<div class="container" style="padding-top:70px;">
-{{.LayoutContent}}
+<div class="container">
+<div id="page-wrapper">{{.LayoutContent}}
 </div>
 {{.Footer}}
 
+    </div>
 <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {{.Script}}

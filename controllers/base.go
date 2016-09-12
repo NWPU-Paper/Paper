@@ -37,7 +37,7 @@ func (c *BaseController) ToIndex() {
 }
 
 func (c *BaseController) RedirectTo(endpoint string, values ...interface{}) {
-	c.Redirect(c.URLFor(endpoint,values), 302)
+	c.Redirect(c.URLFor(endpoint,values...), 302)
 }
 
 func (c *BaseController) Out(message string) {

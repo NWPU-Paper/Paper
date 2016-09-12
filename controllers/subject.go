@@ -49,11 +49,11 @@ func (c *SubjectController) Post() {
 			s.SetStatus(status)
 			break
 		case ACTION_SET_PAPER_GRADE:
-			grade,_ := c.GetInt("paper_grade")
+			grade,_ := c.GetFloat("paper_grade")
 			s.SetGrade(0,grade)
 			break
 		case ACTION_SET_DEFENCE_GRADE:
-			grade,_ := c.GetInt("defence_grade")
+			grade,_ := c.GetFloat("defence_grade")
 			s.SetGrade(1,grade)
 			break
 		case ACTION_UPLOAD_FILE:

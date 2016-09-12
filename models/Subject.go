@@ -16,9 +16,9 @@ type Subject struct {
 	Translate	*Document	`orm:"rel(fk);null"`
 	Status		*Status		`orm:"rel(fk)"`
 	Student 	*User		`orm:"rel(fk);null"`
-	PaperGrade	float32
-	DefenceGrade	float32
-	FinalGrade 	float32 		`orm:"-"`
+	PaperGrade	float64
+	DefenceGrade	float64
+	FinalGrade 	float64 		`orm:"-"`
 	Comment 	string
 	//Time		time.Time
 	Users	[]*User			`orm:"rel(m2m)"`
@@ -86,7 +86,7 @@ func (c *Subject) SetStatus(status int) {
 	o.Update(c,"Status")
 }
 
-func (c *Subject) SetGrade(t int,grade float32){
+func (c *Subject) SetGrade(t ,grade float64){
 	switch t {
 	case 0:
 		//Paper Grade

@@ -36,6 +36,8 @@ func (c *AdminController) NestPrepare() {
 
 	switch c.user.Type {
 	case models.TYPE_USER_STUDENT:
+		c.Data["Module"] = "Student"
+		c.LayoutSections["Nav"] = "student/nav.tpl"
 		break
 	case models.TYPE_USER_TEACHER:
 		c.Data["Module"] = "老师"

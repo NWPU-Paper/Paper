@@ -21,7 +21,7 @@ type Subject struct {
 	FinalGrade 	float64 		`orm:"-"`
 	Comment 	string
 	//Time		time.Time
-	Users	[]*User			`orm:"rel(m2m)"`
+	Users		[]User		`orm:"-"`
 }
 
 func init() {
@@ -36,25 +36,25 @@ func GetSubject(id int)(s *Subject , err error){
 
 func (s *Subject) Get() error {
 	o := orm.NewOrm();
-	//o.Read(s)
 	err :=o.QueryTable("subject").Filter("Id",s.Id).RelatedSel().One(s)
-	//fmt.Println(s.SelectUser)
-	//if err == nil {
-	//	 o.LoadRelated(s,"SelectUser")
-	//	if err2 !=nil {
-	//		fmt.Println(err2)
-	//		fmt.Println(num)
-	//	}
-	//}
-	//s.Users = s.GetSelectUser()
-	//_,err := o.LoadRelated(s,"Users")
+	s.Users = s.GetSelectUser()
 	s.Count()
 	return err
 }
 
-func (s *Subject) GetSelectUser() (users []*User) {
+
+func (s *Subject) GetSelectUser() (users []User) {
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+
+	qb.Select("user.*").
+		From("user").
+		InnerJoin("selected").On("user.user_id = selected.user_id").
+		Where("subject_id = ?")
+	sql := qb.String()
+
 	o := orm.NewOrm();
-	o.QueryTable("user").Filter("Subjects__Subject__Id", s.Id).All(&users);
+	o.Raw(sql, s.Id).QueryRows(&users)
 	return users
 }
 
@@ -69,14 +69,6 @@ func (s *Subject) Count() {
 
 	s.FinalGrade = (s.PaperGrade + s.DefenceGrade) /2
 }
-
-//func (s *Subject) GetSelect() (num int, err error){
-//	o := orm.NewOrm()
-//	num, err = o.Raw("SELECT * FROM `user` WHERE `user`.user_id in (SELECT user_id FROM subject_users WHERE  subject_users.subject_id = ?)",  s.Id ).ValuesList(s.SelectList)
-//	return num, err
-//}
-
-
 
 func (c *Subject) SetStatus(status int) {
 	o := orm.NewOrm();

@@ -30,4 +30,7 @@ func init() {
 	beego.Router("/subject/:id([0-9]+)", &controllers.SubjectController{})
 
 
+	beego.Router("/test", &controllers.TestController{})
+
+
 }

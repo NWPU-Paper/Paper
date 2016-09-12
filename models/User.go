@@ -27,7 +27,6 @@ type User struct {
 	Type     int
 	MaxStudent int
 	NowStudent int
-	Subjects []*Subject    `orm:"reverse(many)"`
 }
 
 func init() {

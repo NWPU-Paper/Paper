@@ -25,8 +25,7 @@ func init() {
 	beego.Router("/student",studentController)
 	beego.Router("/student/profile",studentController,"get:Profile")
 
-	beego.Router("/subject/:id([0-9]+)", &controllers.SubjectController{}, "Get:Detail")
-
+	beego.Router("/subject/:id([0-9]+)", &controllers.SubjectController{})
 
 	//Upload
 	beego.Router("/upload",&controllers.FileController{})

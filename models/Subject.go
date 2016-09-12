@@ -103,7 +103,25 @@ func (c *Subject) AddFile(t int ,d Document)  {
 	o := orm.NewOrm()
 	switch t {
 	case TYPE_FILE_TASK:
-		c.Task.Id = d.Id
-		o.Update(c);
+		c.Task = &d
+		break
+
+	case TYPE_FILE_INTERIM:
+		c.Interim = &d
+		break
+
+	case TYPE_FILE_PAPER:
+		c.Paper = &d
+		break
+
+	case TYPE_FILE_TRANSLATE:
+		c.Translate = &d
+		break
+
+	case TYPE_FILE_PRIMARY:
+		c.Primary = &d
+		break
 	}
+	o.Update(c)
+
 }

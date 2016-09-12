@@ -15,7 +15,7 @@ type Document struct {
 	Id 	int
 	Name	string
 	Path 	string
-	Time 	time.Time
+	Time 	time.Time	`orm:"-"`
 }
 
 func init() {

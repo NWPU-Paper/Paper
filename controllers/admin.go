@@ -26,18 +26,20 @@ func (c *AdminController) NestPrepare() {
 
 	c.Data["CurrentUser"] = c.user
 
-	c.Layout = "base/base.tpl"
+	c.Layout = "base/base2.tpl"
 
 	c.LayoutSections = make(map[string]string)
 
 	c.LayoutSections["HtmlHead"] = "base/htmlhead.tpl"
+
+	c.Data["pageKey"] = ""
 
 	switch c.user.Type {
 	case models.TYPE_USER_STUDENT:
 		break
 	case models.TYPE_USER_TEACHER:
 		c.Data["Module"] = "老师"
-		c.LayoutSections["Nav"] = "teacher/header.tpl"
+		c.LayoutSections["Nav"] = "teacher/nav.tpl"
 		break
 	case models.TYPE_USER_LEADER:
 		c.Data["Module"] = "专业负责人"
@@ -45,7 +47,7 @@ func (c *AdminController) NestPrepare() {
 		break
 	case models.TYPE_USER_SECRETARY:
 		c.Data["Module"] = "答辩秘书"
-		c.LayoutSections["Nav"] = "secretar/header.tpl"
+		c.LayoutSections["Nav"] = "secretar/nav.tpl"
 		break
 	case models.TYPE_USER_ADMIN:
 		c.Data["Module"] = "管理员"

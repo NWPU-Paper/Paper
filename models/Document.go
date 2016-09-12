@@ -1,22 +1,26 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"github.com/astaxie/beego/orm"
+	"time"
+)
 
 type Document struct {
 	Id 	int
 	Name	string
 	Path 	string
+	Time 	time.Time
 }
 
 func init() {
 	orm.RegisterModel(new(Document))
 }
 
-func (d *Document) Add() bool{
+func (d *Document) Add() error{
 	o := orm.NewOrm()
 
-	_, err := o.Insert(&d)
-	return err == nil
+	_, err := o.Insert(d)
+	return err
 
 }
 

@@ -16,8 +16,9 @@ type Subject struct {
 	Translate	*Document	`orm:"rel(fk);null"`
 	Status		*Status		`orm:"rel(fk)"`
 	Student 	*User		`orm:"rel(fk);null"`
-	PaperGrade	int
-	DefenceGrade	int
+	PaperGrade	float32
+	DefenceGrade	float32
+	FinalGrade 	float32 		`orm:"-"`
 	Comment 	string
 	//Time		time.Time
 }
@@ -26,16 +27,32 @@ func init() {
 	orm.RegisterModel(new(Subject))
 }
 
-func GetSubject(id int) *Subject{
-	s :=&Subject{Id:id}
-	s.Get()
-	return s
+func GetSubject(id int)(s *Subject , err error){
+	s =&Subject{Id:id}
+	err = s.Get()
+	return s,err
 }
 
-func (s *Subject) Get() {
+func (s *Subject) Get() error {
 	o := orm.NewOrm();
-	o.QueryTable("subject").Filter("Id",s.Id).RelatedSel().One(s)
+	err :=o.QueryTable("subject").Filter("Id",s.Id).RelatedSel().One(s)
+	s.Count()
+	return err
 }
+
+func (s *Subject) Count() {
+	if s.PaperGrade == 0 {
+		return
+	}
+
+	if s.DefenceGrade == 0 {
+		return
+	}
+
+	s.FinalGrade = (s.PaperGrade + s.DefenceGrade) /2
+}
+
+
 
 func (c *Subject) SetStatus(status int) {
 	o := orm.NewOrm();

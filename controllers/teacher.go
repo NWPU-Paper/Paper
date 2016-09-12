@@ -33,7 +33,6 @@ func (c *TeacherController) Profile() {
 
 func (c *TeacherController) Subject() {
 	c.TplName = "teacher/subject.tpl"
-
 	c.Data["pageKey"] = "subject";
 
 }
@@ -72,12 +71,23 @@ func (c *TeacherController) Message() {
 // 发布新题目
 func (c *TeacherController) AddSubject() {
 	c.TplName = "teacher/addNewSubject.tpl"
-
 	c.LayoutSections = make(map[string]string)
 	c.Data["pageKey"] = "subject";
-	c.LayoutSections["HtmlHead"] = "teacher/htmlhead.tpl"
+	c.LayoutSections["HtmlHead"] = "base/htmlhead.tpl"
 	c.LayoutSections["Nav"] = "teacher/nav.tpl"
-	c.LayoutSections["Script"] = "teacher/script.tpl"
+	c.LayoutSections["Script"] = "base/script.tpl"
+}
+
+// 处理发布新题目请求
+func (c *TeacherController) ExecAddSubject() {
+	title:=c.GetString("title")
+	introduce:=c.GetString("introduce")
+	status:=models.Status{Id:10}
+	newSubject:=models.Subject{Title:title,Presentation:introduce,Sender:&c.user,Status:&status}
+	err:=newSubject.Add()
+	c.Data["json"]=err
+	c.ServeJSON(true)
+
 }
 
 // 显示题目列表

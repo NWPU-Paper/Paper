@@ -28,7 +28,7 @@ func (c *SubjectController) Get() {
 	id ,_ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	s,err:= models.GetSubject(id)
 	if err== nil {
-		c.TplName="subject/body.tpl"
+		c.TplName="subject_detail/subject_detail.tpl"
 		c.Data["Subject"] = s;
 		c.Data["json"] = s;
 		//c.ServeJSON();

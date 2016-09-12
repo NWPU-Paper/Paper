@@ -28,7 +28,7 @@ func (c *SubjectController) Get() {
 	id ,_ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	s,err:= models.GetSubject(id)
 	if err== nil {
-		c.TplName="subject/body.tpl"
+		c.TplName="subject_detail/subject_detail.tpl"
 		c.Data["Subject"] = s;
 		c.Data["json"] = s;
 		//c.ServeJSON();
@@ -41,8 +41,8 @@ func (c *SubjectController) Post() {
 	id ,_ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	s,_:= models.GetSubject(id)
 
-	action,err:= c.GetInt("operate")
-	if err != nil {
+	action, err := c.GetInt("operate")
+	if err == nil {
 		switch action {
 		case ACTION_CHANGE_STATUS:
 			status, _ := c.GetInt("status")
@@ -77,11 +77,15 @@ func (c *SubjectController) Post() {
 			s.AddFile(t,document)
 			break
 
+		default:
+			c.Abort("503")
+
+
 		}
 		c.RedirectTo("SubjectController.Get" , ":id",id)
 
 	} else {
-		c.Abort("403")
+		c.Abort("503")
 	}
 
 

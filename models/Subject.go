@@ -120,6 +120,7 @@ func (c *Subject) AddFile(t int ,d Document)  {
 		c.Primary = &d
 		break
 	}
+	o.Update(c)
 }
 
 func (d *Subject) Add() error {

@@ -86,7 +86,7 @@ func (c *TeacherController) ExecAddSubject() {
 	newSubject:=models.Subject{Title:title,Presentation:introduce,Sender:&c.user,Status:&status}
 	err:=newSubject.Add()
 	c.Data["json"]=err
-	c.ServeJSON(true)
+	c.RedirectTo("teacherController.Subject")
 
 }
 

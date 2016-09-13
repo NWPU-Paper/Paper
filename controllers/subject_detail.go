@@ -36,7 +36,11 @@ func (c *SubjectController) Get() {
 	if err== nil {
 		c.TplName="subject_detail/subject_detail.tpl"
 		c.Data["Subject"] = s;
-		c.Data["json"] = s;
+
+		if s.Status.Id == models.STATUS_SELECTED || s.Status.Id == models.STATUS_START_SUCCESS{
+			c.Data["SelectList"] = s.GetSelectUser();
+		}
+
 		//c.ServeJSON();
 	} else {
 		c.NotFound()
@@ -107,4 +111,18 @@ func (c *SubjectController) Post() {
 	}
 
 
+}
+
+func (c *SubjectController) Lock() {
+	id ,_ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	user := c.Ctx.Input.Param(":student_id")
+	s,_:= models.GetSubject(id)
+	s.Lock(user)
+	c.RedirectTo("SubjectController.Get" , ":id",id)
+}
+
+func (c *SubjectController) Select() {
+	id ,_ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	models.SelectSubject(c.user.UserId,id)
+	c.RedirectTo("SubjectController.Get" , ":id",id)
 }

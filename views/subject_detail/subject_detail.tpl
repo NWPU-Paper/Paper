@@ -6,6 +6,7 @@
 
 {{if eq .Subject.Status.Id 10 12}}
 {{if eq .CurrentUser.Type 3}}
+<div class="row">
 <div class="col-md-2">
     <div class="btn-group btn-group-xm">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -17,28 +18,80 @@
         </ul>
     </div>
 </div>
+</div>
+
 {{end}}
 {{end}}
 
+<div class="well">
+<div class="row">
+    <div class="col-md-2">
+        命题人：{{.Subject.Sender.Name}}
+    </div>
+    <div class="col-md-4">
+        联系方式：{{.Subject.Sender.Phone}}
+    </div>
+    <div class="col-md-4">
+        邮箱：{{.Subject.Sender.Email}}
+    </div>
+</div>
+    {{if .Subject.Student}}
+        <br>
+    <div class="row">
+        <div class="col-md-2">
+            负责学生：{{.Subject.Student.Name}}
+        </div>
+        <div class="col-md-4">
+            联系方式：{{.Subject.Student.Phone}}
+        </div>
+        <div class="col-md-4">
+            邮箱：{{.Subject.Student.Email}}
+        </div>
+    </div>
+    {{end}}
+</div>
 {{if eq .Subject.Status.Id 10 12}}
 {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
+<div class="row">
 <div class="col-md-2">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_modal">
         编辑
     </button>
 </div>
+</div>
+
 {{end}}
 {{end}}
 
 {{if eq .Subject.Status.Id 11 15}}
 <h4>当前已选择学生</h4>
-    {{range .Subject.Users}}
-        {{.Name}} of {{.UserId}} <br>
+    {{range .SelectList}}
+        <div class="row">
+            <div class="col-md-2">{{.Name}}</div>
+            <div class="col-md-4">{{.UserId}}</div>
+            {{if eq $.Subject.Sender.UserId $.CurrentUser.UserId}}
+            <div class="col-md-2">
+                <button onclick="window.open('./{{$.Subject.Id}}/lock/{{.UserId}}')" class="btn btn-default active" role="button">锁定该学生</button>
+            </div>
+            {{end}}
+        </div><br>
     {{else}}
-        当前没有学生选择
+        <h4>当前没有学生选择</h4>
     {{end}}
 
+    {{if eq .CurrentUser.Type 1}}
+        <div class="row">
+            <div class="col-md-2">
+                <button onclick="window.open('./{{.Subject.Id}}/select')" class="btn btn-default active" role="button">选择课题</button>
+            </div>
+        </div>
+    {{end}}
 {{end}}
+
+{{if gt .Subject.Status.Id 16}}
+
+{{end}}
+
 
 <div class="btn-group">
     {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
@@ -46,18 +99,20 @@
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#task_modal">上传计划书</button>
     {{end}}
     {{end}}
+    {{if .Subject.Student}}
     {{if eq .Subject.Student.UserId .CurrentUser.UserId}}
     {{if eq .Subject.Status.Id 21 30 32}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#primary_modal">上传开题报告</button>
     {{end}}
     {{if eq .Subject.Status.Id 31 40 42}}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#paper_modal">上传中期报告</button>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#interim_modal">上传中期报告</button>
     {{end}}
     {{if eq .Subject.Status.Id 41 50 52}}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#interim_modal">上传论文</button>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#paper_modal">上传论文</button>
     {{end}}
     {{if eq .Subject.Status.Id 51 60 62}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#translate_modal">上传论文译文</button>
+    {{end}}
     {{end}}
     {{end}}
 </div>
@@ -70,6 +125,7 @@
     <div class="col-md-6"><a href="{{print .Subject.Task.Path .Subject.Task.Name}}">{{.Subject.Task.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Task.Time "2006-01-02 15:04:05 "}}</div>
     {{if eq .CurrentUser.Type 3}}
+    {{if eq .Subject.Status.Id 20 }}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -82,6 +138,7 @@
         </div>
     </div>
     {{end}}
+    {{end}}
 </div>
 <hr/>
 {{end}}
@@ -92,6 +149,7 @@
     <div class="col-md-6"><a href="{{print .Subject.Primary.Path .Subject.Primary.Name}}">{{.Subject.Primary.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Primary.Time "2006-01-02 15:04:05 "}}</div>
     {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
+    {{if eq .Subject.Status.Id 30}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -104,6 +162,7 @@
         </div>
     </div>
     {{end}}
+    {{end}}
 </div>
 <hr/>
 {{end}}
@@ -114,6 +173,7 @@
     <div class="col-md-6"><a href="{{print .Subject.Interim.Path .Subject.Interim.Name}}">{{.Subject.Interim.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Interim.Time "2006-01-02 15:04:05 "}}</div>
     {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
+    {{if eq .Subject.Status.Id 40}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -126,6 +186,7 @@
         </div>
     </div>
     {{end}}
+    {{end}}
 </div>
 <hr/>
 {{end}}
@@ -136,6 +197,7 @@
     <div class="col-md-6"><a href="{{print .Subject.Paper.Path .Subject.Paper.Name}}">{{.Subject.Paper.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Paper.Time "2006-01-02 15:04:05 "}}</div>
     {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
+    {{if eq .Subject.Status.Id 50}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -148,6 +210,7 @@
         </div>
     </div>
     {{end}}
+    {{end}}
 </div>
 <hr/>
 {{end}}
@@ -159,6 +222,7 @@
     <div class="col-md-2">{{dateformat .Subject.Translate.Time "2006-01-02 15:04:05 "}}</div>
 
     {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
+    {{if eq .Subject.Status.Id 60}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -171,7 +235,7 @@
         </div>
     </div>
     {{end}}
-
+    {{end}}
 </div>
 <hr/>
 {{end}}
@@ -193,7 +257,7 @@
 <div class="row">
 
     {{if eq .CurrentUser.Type 2}}
-    {{if eq .Subject.Status.Id 51}}
+    {{if ge .Subject.Status.Id 51}}
     <div class="col-md-2">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paper_model">
             录入论文分数
@@ -213,7 +277,6 @@
     {{end}}
     {{end}}
 </div>
-<hr/>
 
 <!-- 论文成绩Modal -->
 <div class="modal fade" id="paper_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

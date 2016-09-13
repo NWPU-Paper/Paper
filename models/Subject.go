@@ -55,6 +55,15 @@ func (s *Subject) GetSelectUser() (users []User) {
 
 	o := orm.NewOrm();
 	o.Raw(sql, s.Id).QueryRows(&users)
+
+	var l = []string{}
+	for _, r := range users {
+		l = append(l,r.UserId)
+	}
+	if len(l) !=0 {
+		o.QueryTable("user").Filter("UserId__in", l).RelatedSel().All(&users)
+	}
+
 	return users
 }
 
@@ -171,6 +180,6 @@ func SelectSubject(user_id string,subject_id int) error {
 
 	//更新状态
 	s := Subject{Id:subject_id,Status:&Status{Id:STATUS_SELECTED}}
-	_, err = o.Update(&s)
+	_, err = o.Update(&s,"status_id")
 	return err
 }

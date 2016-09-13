@@ -22,6 +22,7 @@ type SubjectController struct {
 func (c *SubjectController) LoginPrepare() {
 	c.Data["Title"] = "课题"
 	c.Layout = "base/base2.tpl"
+	c.LayoutSections["Script"] = "subject_detail/script.tpl"
 }
 
 func (c *SubjectController) Get() {

@@ -6,7 +6,11 @@
 
 {{if eq .Subject.Status.Id 11 15 16}}
 <h4>当前已选择学生</h4>
-
+    {{range .Subject.Users}}
+        {{.Name}} of {{.UserId}} <br>
+    {{else}}
+        当前没有学生选择
+    {{end}}
 
 {{end}}
 
@@ -44,8 +48,8 @@
                 操作 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">审核通过</a></li>
-                <li><a href="#">审核失败</a></li>
+                <li><a id="task_success" href="#">审核通过</a></li>
+                <li><a id="task_fail" href="#">审核失败</a></li>
             </ul>
         </div>
     </div>

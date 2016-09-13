@@ -20,9 +20,7 @@ func (c *AdminController) NestPrepare() {
 		c.RedirectTo("LoginController.Get")
 	}
 
-	if app, ok := c.AppController.(LoginPreparer); ok {
-		app.LoginPrepare()
-	}
+
 
 	c.Data["CurrentUser"] = c.user
 
@@ -45,7 +43,7 @@ func (c *AdminController) NestPrepare() {
 		break
 	case models.TYPE_USER_LEADER:
 		c.Data["Module"] = "专业负责人"
-
+		c.LayoutSections["Nav"] = "leader/nav.tpl"
 		break
 	case models.TYPE_USER_SECRETARY:
 		c.Data["Module"] = "答辩秘书"
@@ -60,6 +58,10 @@ func (c *AdminController) NestPrepare() {
 	}
 
 	c.Data["Title"] = "控制面板"
+
+	if app, ok := c.AppController.(LoginPreparer); ok {
+		app.LoginPrepare()
+	}
 	
 }
 

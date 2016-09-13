@@ -14,6 +14,11 @@ const ACTION_SET_DEFENCE_GRADE = 3;
 
 const ACTION_UPLOAD_FILE = 4;
 
+const ACTION_SELECT_SUBJECT = 5;
+
+const ACTION_LOCKED_SUBJECT = 6;
+
+const ACTION_EDIT_SUBJECT = 7;
 
 type SubjectController struct {
 	AdminController
@@ -78,6 +83,16 @@ func (c *SubjectController) Post() {
 			s.AddFile(t,document)
 			break
 
+		case ACTION_SELECT_SUBJECT:
+			models.SelectSubject(c.user.UserId,id)
+
+		case ACTION_LOCKED_SUBJECT:
+			user_id := c.GetString("locked_user_id")
+			s.Lock(user_id)
+		case ACTION_EDIT_SUBJECT:
+			s.Title = c.GetString("subject_title")
+			s.Presentation = c.GetString("subject_presentation")
+			s.Save()
 		default:
 			c.Abort("503")
 

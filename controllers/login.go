@@ -13,6 +13,7 @@ func (c *LoginController) Get() {
 
 	c.Data["Title"] = "登陆"
 	c.TplName = "login.tpl"
+
 }
 
 func (c *LoginController) Post() {
@@ -25,9 +26,9 @@ func (c *LoginController) Post() {
 
 	switch u.Login() {
 	case models.ERROR_USER_NOT_EXIST:
-		c.Ctx.WriteString("用户名不存在")
+		c.ToError("用户名不存在","LoginController.Get")
 	case models.ERROR_PASSWORD_ERROR:
-		c.Ctx.WriteString("密码错误")
+		c.ToError("密码错误","LoginController.Get")
 	case models.SUCCESS:
 		c.SetSession("user_id", u.UserId)
 		c.ToIndex()

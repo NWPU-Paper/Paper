@@ -23,7 +23,7 @@ type User struct {
 	Email    string
 	Gender   int
 	Phone    string
-	Major    *Major 	`orm:"rel(fk)"`
+	Major    *Major 	`orm:"rel(fk);null"`
 	Type     int
 	MaxStudent int
 	NowStudent int
@@ -35,9 +35,8 @@ func init() {
 
 // 用户登陆
 func (c *User) Login() int {
-	o := orm.NewOrm()
 	data := *c
-	err := o.Read(c)
+	err := c.GetUser()
 	if err == orm.ErrNoRows {
 		//用户不存在
 		return ERROR_USER_NOT_EXIST
@@ -50,14 +49,10 @@ func (c *User) Login() int {
 }
 
 // 读取用户
-func (c *User) GetUser() bool{
+func (c *User) GetUser() error{
 	o := orm.NewOrm()
 	err := o.QueryTable("user").Filter("UserId",c.UserId).RelatedSel().One(c)
-	if err == orm.ErrNoRows {
-		//用户不存在
-		return false
-	}
-	return true
+	return err
 }
 
 //老师::获得自己发布的课题列表
@@ -65,16 +60,16 @@ func (c *User) GetUser() bool{
 func GetAllSubject(teacher_name string)(subjects []Subject) {
 	o := orm.NewOrm()
 	if teacher_name == "" {
-		o.QueryTable("subject").RelatedSel().All(&subjects)
+		o.QueryTable("subject").RelatedSel().OrderBy("-id").All(&subjects)
 	} else {
-		o.QueryTable("subject").Filter("Sender__Name__contains",teacher_name).RelatedSel().All(&subjects)
+		o.QueryTable("subject").Filter("Sender__Name__contains",teacher_name).OrderBy("-id").RelatedSel().All(&subjects)
 	}
 	return subjects
 }
 
 func (c *User) GetSendSubject()(subjects []Subject) {
 	o := orm.NewOrm()
-	o.QueryTable("subject").Filter("sender_id",c.UserId).All(&subjects)
+	o.QueryTable("subject").Filter("sender_id",c.UserId).OrderBy("-id").RelatedSel().All(&subjects)
 	return subjects
 }
 
@@ -105,11 +100,11 @@ func (c *User) GetSelectSubject()(subjects []Subject) {
 	o := orm.NewOrm()
 	qb, _ := orm.NewQueryBuilder("mysql")
 
-	qb.Select("subject.id").
+	qb.Select("id").
 		From("subject").
-		InnerJoin("selected").On("subject.id = selected.subject_id").
-		InnerJoin("status").On("status.id = subject.status_id").
-		Where("user_id = ?")
+		//InnerJoin("selected").On("subject.id = selected.subject_id").
+		//InnerJoin("status").On("status.id = subject.status_id").
+		Where("student_id = ?")
 	sql := qb.String()
 
 	o.Raw(sql,c.UserId).QueryRows(&subjects)
@@ -125,19 +120,19 @@ func GetSelectListByList(s []Subject)(subjects []Subject){
 		l = append(l,r.Id)
 	}
 	if len(l) !=0 {
-		o.QueryTable("subject").Filter("Id__in", l).RelatedSel().All(&subjects)
+		o.QueryTable("subject").Filter("Id__in", l).RelatedSel().OrderBy("-id").All(&subjects)
 	}
 	return subjects
 
 }
 
-//学生::获得当前锁定的课题
-func (c *User) GetLockedSubject() (subject Subject,err error) {
-	o := orm.NewOrm()
-	subject = Subject{Student:&User{UserId:c.UserId}}
-	err = o.Read(&subject,"student_id")
-	return subject,err
-}
+////学生::获得当前锁定的课题
+//func (c *User) GetLockedSubject() (subject Subject,err error) {
+//	o := orm.NewOrm()
+//	subject = Subject{Student:&User{UserId:c.UserId}}
+//	err = o.Read(&subject,"student_id")
+//	return subject,err
+//}
 
 func (c *User) SelectSubject(id int) error {
 	o := orm.NewOrm()

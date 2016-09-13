@@ -11,6 +11,7 @@ func (c *ListController) LoginPrepare() {
 	c.Layout = "base/base2.tpl"
 	c.LayoutSections["Script"] = "subject_detail/script.tpl"
 	c.TplName = "list.tpl"
+	c.Data["pageKey"] = "list";
 
 }
 
@@ -56,5 +57,31 @@ func (c *ListController) Get() {
 
 	c.Data["SubjectList"] = subjects
 
+}
+
+func (c *ListController) Post() {
+	title:=c.GetString("title")
+	introduce:=c.GetString("detail")
+	newSubject:=models.Subject{Title:title,Presentation:introduce,Sender:&c.user,Status:&models.Status{Id:10}}
+	err:=newSubject.Add()
+	c.Data["json"]=err
+	c.RedirectTo("ListController.Get")
+}
+
+
+func (c *ListController) Select() {
+	c.Data["pageKey"] = "mylist";
+
+	var subjects = []models.Subject{}
+	switch c.user.Type {
+	case models.TYPE_USER_STUDENT:
+		subjects = c.user.GetSelectSubject()
+		c.Data["SubjectList"] = subjects
+		break
+	default:
+		c.RedirectTo("ListController.Get")
+	}
+
+	c.Data["SubjectList"] = subjects
 
 }

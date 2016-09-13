@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/NWPU-Paper/Paper/models"
+	"time"
 )
 
 type LoginPreparer interface{
@@ -29,25 +30,30 @@ func (c *AdminController) NestPrepare() {
 	c.LayoutSections = make(map[string]string)
 
 	c.LayoutSections["HtmlHead"] = "base/htmlhead.tpl"
+	c.LayoutSections["Nav"] = "nav.tpl"
 
-	c.Data["pageKey"] = ""
-
+	c.TplName = "index.tpl"
+	c.Data["pageKey"] = "index"
+	c.Data["startDate"] = models.GetDate(0)
+	c.Data["endDate"] = models.GetDate(1)
+	c.Data["nowDate"] = time.Now()
+	s := models.GetDate(1).Date.Day() - time.Now().Day()
+	if s < 0 {
+		s = 0
+	}
+	c.Data["endDay"] = s
 	switch c.user.Type {
 	case models.TYPE_USER_STUDENT:
-		c.Data["Module"] = "Student"
-		c.LayoutSections["Nav"] = "student/nav.tpl"
+		c.Data["Module"] = "学生"
 		break
 	case models.TYPE_USER_TEACHER:
 		c.Data["Module"] = "老师"
-		c.LayoutSections["Nav"] = "teacher/nav.tpl"
 		break
 	case models.TYPE_USER_LEADER:
 		c.Data["Module"] = "专业负责人"
-		c.LayoutSections["Nav"] = "leader/nav.tpl"
 		break
 	case models.TYPE_USER_SECRETARY:
 		c.Data["Module"] = "答辩秘书"
-		c.LayoutSections["Nav"] = "secretary/nav.tpl"
 		break
 	case models.TYPE_USER_ADMIN:
 		c.Data["Module"] = "管理员"
@@ -67,7 +73,16 @@ func (c *AdminController) NestPrepare() {
 
 // 管理的首页
 func (c *AdminController) Get() {
-	c.TplName = "index.tpl"
 
+}
+
+// 管理编辑
+func (c *AdminController) Post() {
+	EndDate := c.GetString("end_date")
+	p, err := time.Parse("2006-01-02",EndDate)
+	if err == nil {
+		models.SetDate(1, p)
+	}
+	c.RedirectTo("AdminController.Get")
 }
 

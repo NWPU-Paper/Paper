@@ -8,7 +8,7 @@
                         <div class="middle">今日日期</div>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge"> </div>
+                        <div class="huge">{{ .startDate }} </div>
                     </div>
                 </div>
             </div>
@@ -32,8 +32,6 @@
 
         </div>
     </div>
-
-
 
     <!-- yellow-->
     <div class="col-lg-3 col-md-6">

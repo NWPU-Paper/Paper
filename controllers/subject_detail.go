@@ -20,6 +20,8 @@ const ACTION_LOCKED_SUBJECT = 6;
 
 const ACTION_EDIT_SUBJECT = 7;
 
+const ACTION_GOTO = 9;
+
 type SubjectController struct {
 	AdminController
 }
@@ -99,6 +101,9 @@ func (c *SubjectController) Post() {
 			s.Presentation = c.GetString("subject_presentation")
 			s.Save()
 			break
+		case ACTION_GOTO:
+			id, err = c.GetInt("id")
+			break
 		default:
 			c.Abort("503")
 
@@ -115,7 +120,7 @@ func (c *SubjectController) Post() {
 
 func (c *SubjectController) Lock() {
 	id ,_ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-	user := c.Ctx.Input.Param(":student_id")
+	user := c.Ctx.Input.Param(":user")
 	s,_:= models.GetSubject(id)
 	s.Lock(user)
 	c.RedirectTo("SubjectController.Get" , ":id",id)
@@ -126,3 +131,5 @@ func (c *SubjectController) Select() {
 	models.SelectSubject(c.user.UserId,id)
 	c.RedirectTo("SubjectController.Get" , ":id",id)
 }
+
+

@@ -21,7 +21,8 @@ func (c *BaseController) Prepare() {
 
 	if id != nil {
 		c.user = models.User{UserId:id.(string)}
-		if c.user.GetUser() {
+		err := c.user.GetUser()
+		if err == nil {
 			c.isLogin = true
 		}
 	}
@@ -32,6 +33,11 @@ func (c *BaseController) Prepare() {
 
 }
 
+func (c *BaseController) ToError(msg string,ufos string)  {
+	c.Ctx.WriteString("<h1>"+ msg +"</h1><script>var i = 3;function out(){if(i>1){i--;}else{location.href=\""+ beego.URLFor(ufos) + "\";}document.getElementById('aa').innerHTML=i+\"秒后跳转\";}setInterval('out()',1000);</script><p><div id=\"aa\">3秒后跳转</div></p>")
+	c.StopRun()
+}
+
 func (c *BaseController) ToIndex() {
 	c.RedirectTo("IndexController.Get")
 }
@@ -40,10 +46,11 @@ func (c *BaseController) RedirectTo(endpoint string, values ...interface{}) {
 	c.Redirect(c.URLFor(endpoint,values...), 302)
 }
 
-func (c *BaseController) Out(message string) {
-	c.Ctx.WriteString(message)
+func (c *BaseController) NotFound() {
+	c.ToError("没有找到这个东西","AdminController.Get")
 }
 
-func (c *BaseController) NotFound() {
-	c.Ctx.WriteString("NotFound")
+func (c *BaseController) R()  {
+	c.RedirectTo("SubjectController.Get",":id",c.GetString("id"))
+
 }

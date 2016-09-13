@@ -1,27 +1,27 @@
 <h2>{{.Subject.Title}}</h2>
 <p class="lead">{{.Subject.Presentation}}</p>
+<p>研究方向：{{.Subject.Sender.Major.MajorName}}</p>
 <hr/>
-<h4>当前状态</h4>
-<p>{{.Subject.Status.Name}}</p>
+<h3> 当前状态 <span class='label {{if eq .Subject.Status.Id 12 22 32 42 52 62 71}}label-warning{{else}}label-info{{end}}'>{{.Subject.Status.Name}}</span></h3>
 
-{{if eq .Subject.Status.Id 10 12}}
-{{if eq .CurrentUser.Type 3}}
-<div class="row">
-<div class="col-md-2">
-    <div class="btn-group btn-group-xm">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            操作 <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a id="subject_success" href="#">审核通过</a></li>
-            <li><a id="subject_fail" href="#">审核失败</a></li>
-        </ul>
-    </div>
+    {{if eq .Subject.Status.Id 10 12}}
+    {{if eq .CurrentUser.Type 3}}
+<div class="btn-group btn-group-xm">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        审核 <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a id="subject_success" href="#">审核通过</a></li>
+        <li><a id="subject_fail" href="#">审核失败</a></li>
+    </ul>
 </div>
-</div>
-
+<br>
 {{end}}
 {{end}}
+
+<br>
+
+
 
 <div class="well">
 <div class="row">
@@ -64,33 +64,30 @@
 {{end}}
 
 {{if eq .Subject.Status.Id 11 15}}
-<h4>当前已选择学生</h4>
+<h4>当前已选择该课题的学生</h4>
     {{range .SelectList}}
         <div class="row">
             <div class="col-md-2">{{.Name}}</div>
             <div class="col-md-4">{{.UserId}}</div>
             {{if eq $.Subject.Sender.UserId $.CurrentUser.UserId}}
             <div class="col-md-2">
-                <button onclick="window.open('./{{$.Subject.Id}}/lock/{{.UserId}}')" class="btn btn-default active" role="button">锁定该学生</button>
+                <a href="./{{$.Subject.Id}}/lock/{{.UserId}}" class="btn btn-default" role="button">锁定该学生</a>
             </div>
             {{end}}
         </div><br>
     {{else}}
-        <h4>当前没有学生选择</h4>
+        <p>当前没有学生选择</p>
     {{end}}
 
     {{if eq .CurrentUser.Type 1}}
         <div class="row">
             <div class="col-md-2">
-                <button onclick="window.open('./{{.Subject.Id}}/select')" class="btn btn-default active" role="button">选择课题</button>
+                <a href="./{{.Subject.Id}}/select" class="btn btn-default" role="button">选择课题</a>
             </div>
         </div>
     {{end}}
 {{end}}
 
-{{if gt .Subject.Status.Id 16}}
-
-{{end}}
 
 
 <div class="btn-group">
@@ -113,6 +110,9 @@
     {{if eq .Subject.Status.Id 51 60 62}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#translate_modal">上传论文译文</button>
     {{end}}
+    {{if eq .Subject.Status.Id 11 }}
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#lock_modal">指定负责学生</button>
+    {{end}}
     {{end}}
     {{end}}
 </div>
@@ -123,13 +123,13 @@
 <div class="row">
     <div class="col-md-2">任务书</div>
     <div class="col-md-6"><a href="{{print .Subject.Task.Path .Subject.Task.Name}}">{{.Subject.Task.Name}}</a></div>
-    <div class="col-md-2">{{dateformat .Subject.Task.Time "2006-01-02 15:04:05 "}}</div>
+    <div class="col-md-2">{{dateformat .Subject.Task.Time "2006-01-02 15:04:05"}}</div>
     {{if eq .CurrentUser.Type 3}}
     {{if eq .Subject.Status.Id 20 }}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                操作 <span class="caret"></span>
+                审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li><a id="task_success" href="#">审核通过</a></li>
@@ -147,13 +147,13 @@
 <div class="row">
     <div class="col-md-2">开题报告</div>
     <div class="col-md-6"><a href="{{print .Subject.Primary.Path .Subject.Primary.Name}}">{{.Subject.Primary.Name}}</a></div>
-    <div class="col-md-2">{{dateformat .Subject.Primary.Time "2006-01-02 15:04:05 "}}</div>
+    <div class="col-md-2">{{dateformat .Subject.Primary.Time "2006-01-02 15:04:05"}}</div>
     {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
     {{if eq .Subject.Status.Id 30}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                操作 <span class="caret"></span>
+                审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li><a id="primary_success" href="#">审核通过</a></li>
@@ -177,7 +177,7 @@
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                操作 <span class="caret"></span>
+                审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li><a id="interim_success" href="#">审核通过</a></li>
@@ -201,7 +201,7 @@
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                操作 <span class="caret"></span>
+                审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li><a id="paper_success" href="#">审核通过</a></li>
@@ -226,7 +226,7 @@
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                操作 <span class="caret"></span>
+                审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li><a id="translate_success" href="#">审核通过</a></li>
@@ -470,9 +470,37 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label >课题题目:</label>
                         <input type="text" class="form-control" name="subject_title" placeholder="请输入课题题目" value="{{.Subject.Title}}">
-                        <input type="text" class="form-control" name="subject_presentation" placeholder="请输入课题描述" value="{{.Subject.Presentation}}">
+                        <label >题目描述:</label>
+                        <textarea class="form-control" name="subject_presentation" placeholder="请输入课题描述" rows="4">{{.Subject.Presentation}}</textarea>
                         <input style="display:none" name="operate" value="7">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 锁定Modal -->
+<div class="modal fade" id="lock_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <form role="form" action="#" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label >学生ID:</label>
+                        <input type="text" class="form-control" name="locked_user_id" placeholder="请输入负责学生ID">
+                        <input style="display:none" name="operate" value="6">
                     </div>
                 </div>
                 <div class="modal-footer">

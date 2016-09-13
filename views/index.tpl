@@ -1,27 +1,36 @@
-<!DOCTYPE html>
-
-<html>
-<head>
-  <title>Beego</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-</head>
-
-<body>
-  <header>
-    <h1 class="logo">Welcome to Beego</h1>
-    <div class="description">
-      Beego is a simple & powerful Go web framework which is inspired by tornado and sinatra.
+<div class="row">
+    <!-- blue-->
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class="middle">今日日期</div>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{dateformat .nowDate "2006-01-02"}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
-  <footer>
-    <div class="author">
-      Official website:
-      <a href="http://{{.Website}}">{{.Website}}</a> /
-      Contact me:
-      <a class="email" href="mailto:{{.Email}}">{{.Email}}</a>
+    <!-- green-->
+    <div class="col-md-4">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class="middle">距离结束</div>
+                        <!-- <i class="fa fa-tasks fa-5x"></i>  -->
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"> {{.endDay}}天</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </footer>
-  <div class="backdrop"></div>
-</body>
-</html>
+
+
+</div>

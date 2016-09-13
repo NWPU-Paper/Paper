@@ -20,7 +20,6 @@ type Subject struct {
 	DefenceGrade	float64
 	FinalGrade 	float64 		`orm:"-"`
 	Comment 	string
-	//Time		time.Time
 	Users		[]User		`orm:"-"`
 }
 
@@ -153,16 +152,15 @@ func (s *Subject) Lock(user_id string) error {
 
 	s.Student = &User{UserId:user_id}
 	s.Status = &Status{Id:STATUS_SELECTED_LOCKED}
-	_,err := o.Update(s)
+	_,err := o.Update(s,"Student","Status")
 	if err != nil {
 		return err
 	}
 	//删除所有选定的人
-	_,err = o.QueryTable("selected").Filter("user_id", user_id).Delete()
-	if (err != nil) {
-		return err
-	}
-	_,err = o.QueryTable("selected").Filter("subject_id",s.Id).Delete()
+	sql := "DELETE FROM `selected` WHERE (`user_id` = ? OR `subject_id` = ?);"
+
+	_, err = o.Raw(sql,user_id , s.Id).Exec()
+
 	return err
 }
 
@@ -170,7 +168,7 @@ func (s *Subject) Lock(user_id string) error {
 func SelectSubject(user_id string,subject_id int) error {
 	o := orm.NewOrm()
 
-	sql := "INSERT INTO `paper`.`selected` (`user_id`, `subject_id`) VALUES (?, ?);"
+	sql := "INSERT INTO `selected` (`user_id`, `subject_id`) VALUES (?, ?);"
 
 	_, err := o.Raw(sql,user_id , subject_id).Exec()
 

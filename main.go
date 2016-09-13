@@ -10,14 +10,14 @@ import (
 
 func init() {
 	orm.RegisterDataBase("default", "mysql", "paper:paper@tcp(mysql.banixc.com:3306)/paper?charset=utf8mb4,utf8")
-	orm.RunSyncdb("default", false, true)
+	orm.RunSyncdb("default", false, false)
 
 	//开启Debug
-	orm.Debug = true
+	orm.Debug = false
 }
 
 func main() {
-	beego.AddFuncMap("Now",time.Now)
+	beego.AddFuncMap("Now", time.Now)
 
 	beego.Run()
 }

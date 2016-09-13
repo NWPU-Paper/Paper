@@ -34,7 +34,7 @@ func (c *BaseController) Prepare() {
 }
 
 func (c *BaseController) ToError(msg string,ufos string)  {
-	c.Ctx.WriteString("<h1>"+ msg +"</h1><script>var i = 3;function out(){if(i>1){i--;}else{location.href=\""+ beego.URLFor(ufos) + "\";}document.getElementById('aa').innerHTML=i+\"秒后跳转\";}setInterval('out()',1000);</script><p><div id=\"aa\">3秒后跳转</div></p>")
+	c.Ctx.WriteString("<h1>>(+_+)?<br>"+ msg +"</h1><script>var i = 3;function out(){if(i>1){i--;}else{location.href=\""+ beego.URLFor(ufos) + "\";}document.getElementById('aa').innerHTML=i+\"秒后跳转\";}setInterval('out()',1000);</script><p><div id=\"aa\">3秒后跳转</div></p>")
 	c.StopRun()
 }
 
@@ -47,7 +47,7 @@ func (c *BaseController) RedirectTo(endpoint string, values ...interface{}) {
 }
 
 func (c *BaseController) NotFound() {
-	c.ToError("没有找到这个东西","AdminController.Get")
+	c.ToError("没有找到这个文件","AdminController.Get")
 }
 
 func (c *BaseController) R()  {

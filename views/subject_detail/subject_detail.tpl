@@ -7,7 +7,7 @@
     {{if eq .Subject.Status.Id 10 12}}
     {{if eq .CurrentUser.Type 3}}
 <div class="btn-group btn-group-xm">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
         审核 <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
@@ -71,7 +71,7 @@
             <div class="col-md-4">{{.UserId}}</div>
             {{if eq $.Subject.Sender.UserId $.CurrentUser.UserId}}
             <div class="col-md-2">
-                <a href="./{{$.Subject.Id}}/lock/{{.UserId}}" class="btn btn-default" role="button">锁定该学生</a>
+                <a href="./{{$.Subject.Id}}/lock/{{.UserId}}" class="btn btn-success" role="button">锁定该学生</a>
             </div>
             {{end}}
         </div><br>
@@ -82,7 +82,7 @@
     {{if eq .CurrentUser.Type 1}}
         <div class="row">
             <div class="col-md-2">
-                <a href="./{{.Subject.Id}}/select" class="btn btn-default" role="button">选择课题</a>
+                <a href="./{{.Subject.Id}}/select" class="btn btn-primary" role="button">选择课题</a>
             </div>
         </div>
     {{end}}
@@ -93,25 +93,25 @@
 <div class="btn-group">
     {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
     {{if eq .Subject.Status.Id 16 20 22}}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#task_modal">上传计划书</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#task_modal">上传计划书</button>
     {{end}}
     {{end}}
     {{if .Subject.Student}}
     {{if eq .Subject.Student.UserId .CurrentUser.UserId}}
     {{if eq .Subject.Status.Id 21 30 32}}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#primary_modal">上传开题报告</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#primary_modal">上传开题报告</button>
     {{end}}
     {{if eq .Subject.Status.Id 31 40 42}}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#interim_modal">上传中期报告</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#interim_modal">上传中期报告</button>
     {{end}}
     {{if eq .Subject.Status.Id 41 50 52}}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#paper_modal">上传论文</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paper_modal">上传论文</button>
     {{end}}
     {{if eq .Subject.Status.Id 51 60 62}}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#translate_modal">上传论文译文</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#translate_modal">上传论文译文</button>
     {{end}}
     {{if eq .Subject.Status.Id 11 }}
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#lock_modal">指定负责学生</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#lock_modal">指定负责学生</button>
     {{end}}
     {{end}}
     {{end}}
@@ -128,7 +128,7 @@
     {{if eq .Subject.Status.Id 20 }}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                 审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -152,7 +152,7 @@
     {{if eq .Subject.Status.Id 30}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                 审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -176,7 +176,7 @@
     {{if eq .Subject.Status.Id 40}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                 审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -200,7 +200,7 @@
     {{if eq .Subject.Status.Id 50}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                 审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
@@ -225,7 +225,7 @@
     {{if eq .Subject.Status.Id 60}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                 审核 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">

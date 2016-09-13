@@ -47,7 +47,7 @@ func (c *AdminController) NestPrepare() {
 		break
 	case models.TYPE_USER_SECRETARY:
 		c.Data["Module"] = "答辩秘书"
-		c.LayoutSections["Nav"] = "secretar/nav.tpl"
+		c.LayoutSections["Nav"] = "secretary/nav.tpl"
 		break
 	case models.TYPE_USER_ADMIN:
 		c.Data["Module"] = "管理员"

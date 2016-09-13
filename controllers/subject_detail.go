@@ -85,14 +85,16 @@ func (c *SubjectController) Post() {
 
 		case ACTION_SELECT_SUBJECT:
 			models.SelectSubject(c.user.UserId,id)
-
+			break
 		case ACTION_LOCKED_SUBJECT:
 			user_id := c.GetString("locked_user_id")
 			s.Lock(user_id)
+			break
 		case ACTION_EDIT_SUBJECT:
 			s.Title = c.GetString("subject_title")
 			s.Presentation = c.GetString("subject_presentation")
 			s.Save()
+			break
 		default:
 			c.Abort("503")
 

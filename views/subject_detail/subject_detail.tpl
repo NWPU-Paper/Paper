@@ -30,7 +30,7 @@
 {{end}}
 {{end}}
 
-{{if eq .Subject.Status.Id 11 15 16}}
+{{if eq .Subject.Status.Id 11 15}}
 <h4>当前已选择学生</h4>
     {{range .Subject.Users}}
         {{.Name}} of {{.UserId}} <br>
@@ -41,20 +41,22 @@
 {{end}}
 
 <div class="btn-group">
+    {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
     {{if eq .Subject.Status.Id 16 20 22}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#task_modal">上传计划书</button>
     {{end}}
-    {{if eq .CurrentUser.Type 1}}
-    {{if eq true .Subject.Status.Id  21 30 32}}
+    {{end}}
+    {{if eq .Subject.Student.UserId .CurrentUser.UserId}}
+    {{if eq .Subject.Status.Id 21 30 32}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#primary_modal">上传开题报告</button>
     {{end}}
-    {{if eq true .Subject.Status.Id  31 40 42}}
+    {{if eq .Subject.Status.Id 31 40 42}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#paper_modal">上传中期报告</button>
     {{end}}
-    {{if eq true .Subject.Status.Id  41 50 52}}
+    {{if eq .Subject.Status.Id 41 50 52}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#interim_modal">上传论文</button>
     {{end}}
-    {{if eq true .Subject.Status.Id  51 60 62}}
+    {{if eq .Subject.Status.Id 51 60 62}}
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#translate_modal">上传论文译文</button>
     {{end}}
     {{end}}
@@ -89,7 +91,7 @@
     <div class="col-md-2">开题报告</div>
     <div class="col-md-6"><a href="{{print .Subject.Primary.Path .Subject.Primary.Name}}">{{.Subject.Primary.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Primary.Time "2006-01-02 15:04:05 "}}</div>
-    {{if eq .CurrentUser.Type 2}}
+    {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -111,7 +113,7 @@
     <div class="col-md-2">中期报告</div>
     <div class="col-md-6"><a href="{{print .Subject.Interim.Path .Subject.Interim.Name}}">{{.Subject.Interim.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Interim.Time "2006-01-02 15:04:05 "}}</div>
-    {{if eq .CurrentUser.Type 2}}
+    {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -133,7 +135,7 @@
     <div class="col-md-2">论文</div>
     <div class="col-md-6"><a href="{{print .Subject.Paper.Path .Subject.Paper.Name}}">{{.Subject.Paper.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Paper.Time "2006-01-02 15:04:05 "}}</div>
-    {{if eq .CurrentUser.Type 2}}
+    {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -156,7 +158,7 @@
     <div class="col-md-6"><a href="{{print .Subject.Translate.Path .Subject.Translate.Name}}">{{.Subject.Translate.Name}}</a></div>
     <div class="col-md-2">{{dateformat .Subject.Translate.Time "2006-01-02 15:04:05 "}}</div>
 
-    {{if eq .CurrentUser.Type 2}}
+    {{if eq .Subject.Sender.UserId .CurrentUser.UserId}}
     <div class="col-md-2">
         <div class="btn-group btn-group-xm">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -191,15 +193,18 @@
 <div class="row">
 
     {{if eq .CurrentUser.Type 2}}
-    {{if gt .Subject.Status.Id  50}}
+    {{if eq .Subject.Status.Id 51}}
     <div class="col-md-2">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paper_model">
             录入论文分数
         </button>
     </div>
     {{end}}
+    {{end}}
 
     {{if eq .CurrentUser.Type 4}}
+    {{if eq .Subject.Status.Id 61}}
+
     <div class="col-md-2">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#defence_model">
             录入答辩分数
@@ -262,7 +267,7 @@
 </div>
 <!-- 上传任务书 -->
 <div class="modal fade" id="task_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form role="form" action="" method="post">
+    <form role="form" action="" method="post" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -288,7 +293,7 @@
 <!-- 上传开题报告 -->
 <div class="modal fade" id="primary_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <form role="form" action="#" method="post">
+    <form role="form" action="" method="post" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -314,7 +319,7 @@
 <!-- 上传中期报告 -->
 <div class="modal fade" id="interim_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <form role="form" action="#" method="post">
+    <form role="form" action="" method="post" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -339,7 +344,7 @@
 </div>
 <!-- 上传论文 -->
 <div class="modal fade" id="paper_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form role="form" action="#" method="post">
+    <form role="form" action="" method="post" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -366,7 +371,7 @@
 <!-- 上传论文译文 -->
 <div class="modal fade" id="translate_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <form role="form" action="#" method="post">
+    <form role="form" action="" method="post" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

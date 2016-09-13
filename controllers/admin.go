@@ -34,10 +34,12 @@ func (c *AdminController) NestPrepare() {
 
 	c.TplName = "index.tpl"
 	c.Data["pageKey"] = "index"
-	c.Data["startDate"] = models.GetDate(0)
-	c.Data["endDate"] = models.GetDate(1)
+	Start := models.GetDate(0)
+	c.Data["startDate"] = Start
+	End := models.GetDate(1)
+	c.Data["endDate"] = End
 	c.Data["nowDate"] = time.Now()
-	s := models.GetDate(1).Date.Day() - time.Now().Day()
+	s := End.Date.Day() - time.Now().Day()
 	if s < 0 {
 		s = 0
 	}

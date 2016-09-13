@@ -96,8 +96,7 @@
         }
 
         body {
-            background: url("http://imgur.com/1l2D1RS.jpg");
-            background-repeat: no-repeat;
+            background: url("/static/1l2D1RS.jpg") no-repeat;
             background-size: cover;
         }
     </style>

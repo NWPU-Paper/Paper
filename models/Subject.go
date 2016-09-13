@@ -15,7 +15,7 @@ type Subject struct {
 	Paper	 	*Document	`orm:"rel(fk);null"`
 	Translate	*Document	`orm:"rel(fk);null"`
 	Status		*Status		`orm:"rel(fk)"`
-	Student 	*User		`orm:"rel(fk);null"`
+	Student 	*User		`orm:"rel(one);null"`
 	PaperGrade	float64
 	DefenceGrade	float64
 	FinalGrade 	float64 		`orm:"-"`
@@ -121,4 +121,23 @@ func (d *Subject) Add() error {
 	_, err := o.Insert(d)
 	return err
 
+}
+
+//老师/负责人::锁定当前学生
+func (s *Subject) Lock(user_id string) error {
+	o := orm.NewOrm()
+
+	s.Student = &User{UserId:user_id}
+	s.Status = &Status{Id:STATUS_SELECTED_LOCKED}
+	_,err := o.Update(s)
+	if err != nil {
+		return err
+	}
+	//删除所有选定的人
+	_,err = o.QueryTable("selected").Filter("user_id", user_id).Delete()
+	if (err != nil) {
+		return err
+	}
+	_,err = o.QueryTable("selected").Filter("subject_id",s.Id).Delete()
+	return err
 }

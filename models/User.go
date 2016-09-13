@@ -33,6 +33,7 @@ func init() {
 	orm.RegisterModel(new(User))
 }
 
+// 用户登陆
 func (c *User) Login() int {
 	o := orm.NewOrm()
 	data := *c
@@ -48,6 +49,7 @@ func (c *User) Login() int {
 	}
 }
 
+// 读取用户 没啥用 打算删了
 func (c *User) GetUser() bool{
 	o := orm.NewOrm()
 	err := o.Read(c)
@@ -57,3 +59,43 @@ func (c *User) GetUser() bool{
 	}
 	return true
 }
+
+//老师::获得自己发布的课题列表
+func (c *User) GetSendSubject()(subjects []Subject) {
+	o := orm.NewOrm()
+	o.QueryTable("subject").Filter("sender_id",c.UserId).All(&subjects)
+	return subjects
+}
+
+//学生::获得当前选择的课题
+func (c *User) GetSelectSubject()(subjects []Subject) {
+	o := orm.NewOrm()
+	qb, _ := orm.NewQueryBuilder("mysql")
+
+	qb.Select("subject.*").
+		From("subject").
+		InnerJoin("selected").On("subject.id = selected.subject_id").
+		Where("user_id = ?")
+	sql := qb.String()
+
+	o.Raw(sql,c.UserId).QueryRows(&subjects)
+	return subjects
+}
+
+//学生::获得当前锁定的课题
+func (c *User) GetLockedSubject() (subject Subject,err error) {
+	o := orm.NewOrm()
+	subject = Subject{Student:&User{UserId:c.UserId}}
+	err = o.Read(&subject,"student_id")
+	return subject,err
+}
+
+func (c *User) SelectSubject(id int) error {
+	o := orm.NewOrm()
+
+	sql := "INSERT INTO `paper`.`selected` (`user_id`, `subject_id`) VALUES (?, ?);"
+
+	_, err := o.Raw(sql,c.UserId,id).Exec()
+	return err
+}
+
